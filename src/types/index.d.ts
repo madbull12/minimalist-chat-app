@@ -7,4 +7,6 @@ export interface PreviewURL {
 
 export interface MessageProps {
     text:string;
+    timestamp:number;
+    
 }

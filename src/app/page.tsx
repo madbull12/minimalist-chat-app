@@ -14,7 +14,7 @@ const getChatMessages = async() => {
 export default async function Home() {
   const messages = await getChatMessages() as MessageProps[];
   return (
-    <main className='p-4 max-w-7xl mx-auto'>
+    <main className='p-2 max-w-full mx-auto'>
       {/* <Messages>
         {messages.map((message,i)=>{
           const { text } = message;

@@ -4,11 +4,9 @@ import React, { useState, useRef } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios, { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
 const ChatForm = () => {
   const [message, setMessage] = useState<string>("");
   const messageRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

@@ -22,7 +22,7 @@ const Messages = ({ initialMessages }: { initialMessages: MessageProps[] }) => {
   return (
     <div className="flex flex-col items-end gap-y-4 ">
       {messages?.map((message, i) => (
-        <Message key={i} text={message.text} />
+        <Message key={i} message={message} />
       ))}
     </div>
   );
