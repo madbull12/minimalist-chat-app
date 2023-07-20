@@ -1,3 +1,5 @@
+"use client"
+
 import { MessageProps, PreviewURL } from "@/types";
 import Link from "next/link";
 import React, { Suspense, useEffect, useState } from "react";
@@ -5,7 +7,7 @@ import URLPreviewCard from "./URLPreviewCard";
 
 
 
-const Message = async({ text }: { text: string }) => {
+const Message = ({ text }:{ text:string }) => {
   //regex to check if a string contains urls.
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const urls = text.match(urlRegex);
@@ -44,7 +46,8 @@ const Message = async({ text }: { text: string }) => {
             >
               {text}
             </Link>
-            <URLPreviewCard url={Array.isArray(urls) ? urls[0] : "" }  />
+            <URLPreviewCard url={urls[0]} />
+            
           </>
         ) : (
           text

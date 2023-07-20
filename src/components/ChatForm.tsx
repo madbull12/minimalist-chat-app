@@ -21,7 +21,6 @@ const ChatForm = () => {
         text: message,
       });
       setMessage("");
-      router.refresh();
       messageRef.current?.focus();
       messageRef.current?.value === "";
     } catch (error) {
