@@ -1,6 +1,6 @@
 An assignment from klu. Still refactoring the code and implementing the delete function.
 Caveats:
-Status code 429 (TOO MANY REQUESTS) might occur because I use 3rd party api that has rate limiting
+Status code 429 (TOO MANY REQUESTS) might occur because this app uses 3rd party api that has rate limiting
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
