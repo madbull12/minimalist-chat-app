@@ -6,7 +6,7 @@ import Link from "next/link";
 import React, { Suspense, useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 
-const URLPreviewCard = async ({ url }: { url: string }) => {
+const URLPreviewCard = ({ url }: { url: string }) => {
   //extract the hostname from url
   //if preview undefined then make yt.com as base url;
   const [preview, setPreview] = useState<PreviewURL>();
