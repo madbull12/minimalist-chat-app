@@ -7,7 +7,7 @@ import { MessageProps } from '@/types';
 import Link from 'next/link';
 
 const getChatMessages = async() => {
-  const res = await db.zrange("chat:messages",0,100);
+  const res = await db.zrange("chat:messages",0,-1);
   return res;
 }
 

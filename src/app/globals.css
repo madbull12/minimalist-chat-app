@@ -75,4 +75,24 @@
   body {
     @apply bg-background text-foreground;
   }
+  .scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 20px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: white;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-secondary transition-all ease-in-out duration-100; 
+    border-radius: 100vh;
+
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-300
+  }
+
 }

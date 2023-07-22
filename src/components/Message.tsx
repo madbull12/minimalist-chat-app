@@ -8,7 +8,7 @@ import { Trash } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { MessageProps } from "@/types";
 
-const Message = ({ message }:{ message:MessageProps }) => {
+const Message = ({ message }: { message: MessageProps }) => {
   //regex to check if a string contains urls.
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const urls = message?.text?.match(urlRegex);
@@ -32,26 +32,26 @@ const Message = ({ message }:{ message:MessageProps }) => {
   //   console.log(urlPreview)
   // },[])
 
-  const deleteMessage = async() => {
+  const deleteMessage = async () => {
     try {
-      await axios.delete("/api/message/delete",{
-        data:{
-          score:message.timestamp
-        }
-      })
+      await axios.delete("/api/message/delete", {
+        data: {
+          score: message.timestamp,
+        },
+      });
     } catch (error) {
       const err = error as AxiosError;
-      throw new Error("Oops something went wrong" + err.message);
+      throw new Error("Oops something went wrong " + err.message);
     }
-  }
+  };
 
   return (
-    <div className="flex items-end gap-x-1" ref={hoverRef}>
-      <div className="w-auto rounded-lg bg-secondary text-secondary-foreground p-2">
-        {text.split(urlRegex).map((text, index) =>
+    <div className="flex  items-end gap-x-1" ref={hoverRef}>
+      <div className=" rounded-lg bg-secondary text-secondary-foreground p-2">
+        {text?.split(urlRegex).map((text, index) =>
           // Wrap URLs in Link tags
           urls && urls.includes(text) ? (
-            <>
+            <div key={index}>
               <Link
                 key={index}
                 className="underline"
@@ -62,14 +62,18 @@ const Message = ({ message }:{ message:MessageProps }) => {
                 {text}
               </Link>
               <URLPreviewCard url={urls[0]} />
-            </>
+            </div>
           ) : (
             text
           )
         )}
       </div>
-     <Trash onClick={deleteMessage} className={`${!isHovered ? "invisible " : ""} w-[20px] h-[15px] cursor-pointer`} /> 
-      
+      <Trash
+        onClick={deleteMessage}
+        className={`${
+          !isHovered ? "invisible " : ""
+        } w-[20px] h-[15px] cursor-pointer`}
+      />
     </div>
   );
 };

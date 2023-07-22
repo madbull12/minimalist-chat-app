@@ -3,11 +3,15 @@ import { pusherServer } from "@/lib/pusher";
 
 export  async function DELETE(req: Request) {
   try {
-    const { score } = await req.json()
+    const { score }:{ score:number } = await req.json();
 
-    await pusherServer.trigger('chat_messages', 'chat_event',null)
+    const data = {
+        score
+    }
 
-    await db.zremrangebyscore("chat:messages", score, score);
+    await pusherServer.trigger('chat_messages', 'delete_chat',data)
+
+    await db.zremrangebyscore("chat_messages",score,score+1);
     return new Response("OK");
   } catch (error) {
     if (error instanceof Error) {

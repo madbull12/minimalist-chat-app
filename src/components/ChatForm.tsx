@@ -40,6 +40,7 @@ const ChatForm = () => {
         }}
         onChange={(e) => setMessage(e.target.value)}
         type="text"
+        value={message}
         placeholder="Message..."
       />
       <Button
