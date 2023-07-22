@@ -11,6 +11,7 @@ const URLPreviewCard = ({ url }: { url: string }) => {
   //if preview undefined then make yt.com as base url;
   const [preview, setPreview] = useState<PreviewURL>();
 
+  console.log(preview)
   const { hostname } = new URL(url);
 
   useEffect(() => {
@@ -28,26 +29,32 @@ const URLPreviewCard = ({ url }: { url: string }) => {
     getUrlPreview(url);
   }, []);
 
-  if (!preview) return <Skeleton className="w-[300] h-[200]"  />;
+  if (!preview) return <Skeleton className="w-[300] h-[200]" />;
 
   return (
-      <Link
-        href={preview?.url}
-        target="_blank"
-        className="flex items-center gap-x-2 cursor-pointer mt-4"
-      >
+    <Link
+      href={preview?.url}
+      target="_blank"
+      className="flex items-start md:items-center gap-x-2 cursor-pointer mt-4 flex-col md:flex-row"
+    >
+      <div className="w-full md:w-1/2 relative">
         <Image
           src={preview?.image}
           objectFit="cover"
-          width={125}
-          height={150}
+          quality={100}
           alt="preview-image"
+          // sizes="(min-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          height={150}
+          width={125}
+          className="w-full h-full"
         />
-        <div className="flex flex-col">
-          <p className="text-lg">{hostname}</p>
-          <p className="text-sm">{preview?.title}</p>
-        </div>
-      </Link>
+      </div>
+
+      <div className="flex flex-col">
+        <p className="text-lg">{hostname}</p>
+        <p className="text-sm">{preview?.title}</p>
+      </div>
+    </Link>
   );
 };
 

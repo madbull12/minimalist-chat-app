@@ -11,7 +11,7 @@ export  async function DELETE(req: Request) {
 
     await pusherServer.trigger('chat_messages', 'delete_chat',data)
 
-    await db.zremrangebyscore("chat_messages",score,score+1);
+    await db.zrem("chat_messages",score);
     return new Response("OK");
   } catch (error) {
     if (error instanceof Error) {

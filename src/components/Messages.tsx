@@ -32,14 +32,15 @@ const Messages = ({ initialMessages }: { initialMessages: MessageProps[] }) => {
     }
 
     pusherClient.bind("chat_event", messageHandler);
-    pusherClient.bind("delete_chat", deleteMessage)
+    // pusherClient.bind("delete_chat", deleteMessage)
     return () => {
       pusherClient.unsubscribe("chat_messages");
       pusherClient.unbind("chat_event", messageHandler);
+      // pusherClient.unbind("delete_chat", deleteMessage);
     };
   }, []);
   return (
-    <div className="flex flex-col w-3/4 md:w-1/2 ml-auto items-end gap-y-4 overflow-y-scroll h-[500px] scrollbar  ">
+    <div className="flex flex-col w-full sm:w-3/4 md:w-1/2 ml-auto items-end gap-y-4 overflow-y-scroll h-[90vh] scrollbar  ">
       {messages?.map((message, i) => (
         <Message key={i} message={message} />
       ))}
