@@ -7,11 +7,14 @@ import useHover from "@/app/hooks/use-hover";
 import { Trash } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { MessageProps } from "@/types";
+import { useRouter } from "next/navigation";
 
 const Message = ({ message }: { message: MessageProps }) => {
   //regex to check if a string contains urls.
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const urls = message?.text?.match(urlRegex);
+
+  const router = useRouter()
 
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
   const { text } = message || "";

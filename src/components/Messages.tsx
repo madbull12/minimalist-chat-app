@@ -8,36 +8,48 @@ import Message from "./Message";
 
 const Messages = ({ initialMessages }: { initialMessages: MessageProps[] }) => {
   const [messages, setMessages] = useState<MessageProps[]>(initialMessages);
-  console.log(messages)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  console.log(messages);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
   useEffect(() => {
     pusherClient.subscribe("chat_messages");
-    scrollToBottom()
+    scrollToBottom();
     const messageHandler = (message: MessageProps) => {
       setMessages((prev) => [...prev, message]);
-      setTimeout(()=>{
+      setTimeout(() => {
         scrollToBottom();
-
-      },500)
-
+      }, 500);
     };
-    const deleteMessage = ({ score }:{ score:number}) => {
-      console.log(score)
-      const newMessages = messages?.filter((prev)=>prev?.timestamp !== score)
-      setMessages(newMessages);
-    }
 
     pusherClient.bind("chat_event", messageHandler);
-    // pusherClient.bind("delete_chat", deleteMessage)
     return () => {
       pusherClient.unsubscribe("chat_messages");
       pusherClient.unbind("chat_event", messageHandler);
       // pusherClient.unbind("delete_chat", deleteMessage);
     };
+  }, []);
+
+  useEffect(() => {
+    console.log(messages);
+
+    pusherClient.subscribe("chat_messages");
+
+    const deleteMessage = ({ score }: { score: number }) => {
+      console.log(messages,score)
+    
+      setMessages((messages)=>messages.filter((message)=>message.timestamp !== score));
+    };
+    pusherClient.bind("delete_chat", deleteMessage);
+
+    return () => {
+      pusherClient.unsubscribe("chat_messages");
+
+      pusherClient.unbind("delete_chat", deleteMessage);
+    }
+
   }, []);
   return (
     <div className="flex flex-col w-full sm:w-3/4 md:w-1/2 ml-auto items-end gap-y-4 overflow-y-scroll h-[90vh] scrollbar  ">
