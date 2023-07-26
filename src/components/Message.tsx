@@ -4,17 +4,16 @@ import Link from "next/link";
 import React from "react";
 import URLPreviewCard from "./URLPreviewCard";
 import useHover from "@/app/hooks/use-hover";
-import { Trash } from "lucide-react";
-import axios, { AxiosError } from "axios";
 import { MessageProps } from "@/types";
 import { useRouter } from "next/navigation";
+import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 
 const Message = ({ message }: { message: MessageProps }) => {
   //regex to check if a string contains urls.
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const urls = message?.text?.match(urlRegex);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
   const { text } = message || "";
@@ -35,18 +34,7 @@ const Message = ({ message }: { message: MessageProps }) => {
   //   console.log(urlPreview)
   // },[])
 
-  const deleteMessage = async () => {
-    try {
-      await axios.delete("/api/message/delete", {
-        data: {
-          score: message.timestamp,
-        },
-      });
-    } catch (error) {
-      const err = error as AxiosError;
-      throw new Error("Oops something went wrong " + err.message);
-    }
-  };
+
 
   return (
     <div className="flex  items-end gap-x-1" ref={hoverRef}>
@@ -71,12 +59,13 @@ const Message = ({ message }: { message: MessageProps }) => {
           )
         )}
       </div>
-      <Trash
-        onClick={deleteMessage}
+      <div
         className={`${
           !isHovered ? "invisible " : ""
-        } w-[20px] h-[15px] cursor-pointer`}
-      />
+        } `}
+      >
+        <ConfirmDeleteDialog message={message} />
+      </div>
     </div>
   );
 };
